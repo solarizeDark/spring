@@ -1,22 +1,22 @@
 package ru.fedusiv.repositories;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 import ru.fedusiv.entities.Student;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import java.util.List;
 
+@Repository
 public class StudentsRepositoryImpl implements StudentsRepository {
 
 
     //language=SQL
     private static String SQL_FIND_ALL = "select * from students;";
 
+    @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
-
-    public StudentsRepositoryImpl(NamedParameterJdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     private RowMapper<Student> studentRowMapper = (row, rowNum) ->
             Student.builder()
