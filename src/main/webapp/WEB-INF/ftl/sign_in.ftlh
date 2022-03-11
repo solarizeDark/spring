@@ -8,6 +8,9 @@
 <h1>Sign in</h1>
 
 <form role="form" action="/signIn" method="post">
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
     <div>
         <label for="username">Username</label>
         <input type="text" name="username" id="username" required autofocus/>

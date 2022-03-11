@@ -11,6 +11,9 @@
 <h1>Profile page</h1>
 <label for="info">Personal info</label>
 <form role="form" action="/profile" method="post" id="info">
+    <input type="hidden"
+           name="${_csrf.parameterName}"
+           value="${_csrf.token}"/>
     <div>
         <label for="Name">Name</label>
         <input type="text" id="name" required autofocus/>
