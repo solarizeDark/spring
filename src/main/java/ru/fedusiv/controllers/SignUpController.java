@@ -3,9 +3,8 @@ package ru.fedusiv.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import ru.fedusiv.UserForm;
+import ru.fedusiv.dto.SignUpForm;
 import ru.fedusiv.services.SignUpService;
 
 @Controller
@@ -20,7 +19,7 @@ public class SignUpController {
     }
 
     @PostMapping("/signUp")
-    public String signUpPOST(UserForm form) {
+    public String signUpPOST(SignUpForm form) {
         signUpService.save(form);
         return "profile";
     }

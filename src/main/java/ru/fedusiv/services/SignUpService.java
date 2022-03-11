@@ -1,11 +1,9 @@
 package ru.fedusiv.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import ru.fedusiv.UserForm;
-import ru.fedusiv.repositories.UsersRepository;
+import ru.fedusiv.dto.SignUpForm;
 
 public interface SignUpService {
 
-    void save(UserForm form);
+    void save(SignUpForm form);
 
 }

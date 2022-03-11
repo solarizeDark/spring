@@ -1,11 +1,11 @@
-package ru.fedusiv;
+package ru.fedusiv.dto;
 
 import lombok.Builder;
 import lombok.Data;
 
 @Data
 @Builder
-public class UserForm {
+public class SignUpForm {
 
     private String email;
     private String password;

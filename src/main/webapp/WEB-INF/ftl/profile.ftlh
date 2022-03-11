@@ -9,5 +9,25 @@
 </head>
 <body>
 <h1>Profile page</h1>
+<label for="info">Personal info</label>
+<form role="form" action="/profile" method="post" id="info">
+    <div>
+        <label for="Name">Name</label>
+        <input type="text" id="name" required autofocus/>
+    </div>
+    <div>
+        <label for="Surame">Surname</label>
+        <input type="text" id="surname" required autofocus/>
+    </div>
+    <div>
+        <label for="Age">Age</label>
+        <input type="text" id="age" required autofocus/>
+    </div>
+    <div>
+        <label for="Group">Group</label>
+        <input type="text" id="group" required autofocus/>
+    </div>
+    <button type="submit">Add info</button>
+</form>
 </body>
 </html>
