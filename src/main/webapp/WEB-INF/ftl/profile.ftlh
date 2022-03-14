@@ -8,29 +8,29 @@
     <title>Profile</title>
 </head>
 <body>
+
 <h1>Profile page</h1>
+<br>
 <label for="info">Personal info</label>
-<form role="form" action="/profile" method="post" id="info">
+
+<form action="/profile" method="post">
     <input type="hidden"
            name="${_csrf.parameterName}"
            value="${_csrf.token}"/>
-    <div>
-        <label for="Name">Name</label>
-        <input type="text" id="name" required autofocus/>
-    </div>
-    <div>
-        <label for="Surame">Surname</label>
-        <input type="text" id="surname" required autofocus/>
-    </div>
-    <div>
-        <label for="Age">Age</label>
-        <input type="text" id="age" required autofocus/>
-    </div>
-    <div>
-        <label for="Group">Group</label>
-        <input type="text" id="group" required autofocus/>
-    </div>
+    <input type="text" placeholder="name" name="name"/>
+    <br>
+    <input type="text" placeholder="surname" name="surname"/>
+    <br>
+    <input type="text" placeholder="age" name="age"/>
+    <br>
+    <input type="text" placeholder="group" name="group"/>
+    <br>
     <button type="submit">Add info</button>
 </form>
+
+<#if error??>
+    ${error}
+</#if>
+
 </body>
 </html>

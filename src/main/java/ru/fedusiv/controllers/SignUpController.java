@@ -13,7 +13,7 @@ public class SignUpController {
     @Autowired
     private SignUpService signUpService;
 
-    @GetMapping("/signUp")
+    @GetMapping(value = "/signUp", produces = "text/plain;charset=UTF-8")
     public String signUpGET() {
         return "sign_up";
     }

@@ -31,4 +31,8 @@ public class Group {
     @OneToMany(mappedBy = "group")
     private List<Student> students;
 
+    public String toString() {
+        return this.getId();
+    }
+
 }

@@ -1,10 +1,13 @@
 package ru.fedusiv.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import ru.fedusiv.entities.Group;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Bio {
 
@@ -14,6 +17,6 @@ public class Bio {
 
     private Integer age;
 
-    private Group group;
+    private String group;
 
 }
