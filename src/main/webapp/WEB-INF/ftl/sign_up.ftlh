@@ -9,7 +9,9 @@
 
 <h2><a href="?lang=ru">ru</a> </h2>
 <h2><a href="?lang=en">en</a> </h2>
+
 <@spring.bind "signUpForm"/>
+
 <h1><@spring.message 'signUp.head'/></h1>
 
 <#if usernamePasswordEquality ?? >

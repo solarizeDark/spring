@@ -53,4 +53,8 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isEnabled() {
         return isAccountNonExpired();
     }
+
+    public User getUser() {
+        return this.user;
+    }
 }

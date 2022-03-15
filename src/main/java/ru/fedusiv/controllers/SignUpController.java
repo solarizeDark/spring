@@ -27,15 +27,18 @@ public class SignUpController {
     @PostMapping("/signUp")
     public String signUpPOST(@Valid SignUpForm form, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            bindingResult.getAllErrors().stream().anyMatch(error -> {
-                if (Objects.requireNonNull(error.getCodes())[0].equals("signUpForm.UsernamePasswordNonEquality")) {
-                    model.addAttribute("usernamePasswordEquality", error.getDefaultMessage());
-                }
-                return true;
-            });
+
+            bindingResult.getAllErrors()
+                .stream()
+                .filter(error ->
+                    Objects.requireNonNull(error.getCodes())[0].equals("signUpForm.UsernamePasswordNonEquality")
+                )
+                .forEach(error -> model.addAttribute("usernamePasswordEquality", error.getDefaultMessage()));
+
             model.addAttribute("signUpForm", form);
             return "sign_up";
         }
+
         signUpService.save(form);
         return "redirect:profile";
     }
