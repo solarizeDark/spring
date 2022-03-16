@@ -1,9 +1,11 @@
 package ru.fedusiv.entities;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
+import ru.fedusiv.json.TemplateJsonSerializer;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -13,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "groups")
+@JsonSerialize(using = TemplateJsonSerializer.class)
 public class Group {
 
     @Id
@@ -22,13 +25,13 @@ public class Group {
     @JoinColumn(name = "student_id")
     private Student monitor;
 
-    @Temporal(TemporalType.DATE)
-    private Date entranceDate;
+    @Basic
+    private LocalDate entranceDate;
 
-    @Temporal(TemporalType.DATE)
-    private Date graduateDate;
+    @Basic
+    private LocalDate graduateDate;
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
     private List<Student> students;
 
     public String toString() {

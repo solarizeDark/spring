@@ -1,18 +1,19 @@
 package ru.fedusiv.entities;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
+import ru.fedusiv.json.TemplateJsonSerializer;
 
 import javax.persistence.*;
 
 @Entity
-@Data
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = false)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="students")
+@JsonSerialize(using = TemplateJsonSerializer.class)
 public class Student {
 
     @Id

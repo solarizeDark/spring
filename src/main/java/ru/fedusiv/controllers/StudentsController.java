@@ -24,7 +24,15 @@ public class StudentsController {
     @Autowired
     private GroupsService groupsService;
 
-    @GetMapping("/students")
+    @GetMapping(value = "/students",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            params = "studentId")
+    @ResponseBody
+    public Student getStudentByIdGET(@RequestParam("studentId") Long studentId) {
+        return studentsService.getStudentById(studentId);
+    }
+
+    @GetMapping(value = "/students", params = "{!groupId, !studentId}")
     public ModelAndView studentsGET() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("students", studentsService.findAll());
@@ -32,12 +40,15 @@ public class StudentsController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/students", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/students",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            params = "groupId")
     @ResponseBody
     public List<Student> getAllStudentsByGroup (
             @RequestParam(value = "groupId") String groupId) {
         try {
             Group group = groupsService.getGroupById(groupId);
+            List<Student> students = group.getStudents();
             return group.getStudents();
         } catch (NoEntityException exception) {
             throw new IllegalArgumentException(exception);

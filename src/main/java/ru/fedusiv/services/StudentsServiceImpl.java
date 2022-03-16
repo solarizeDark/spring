@@ -42,4 +42,10 @@ public class StudentsServiceImpl  implements StudentsService {
             throw new SaveException(" bio");
         }
     }
+
+    @Override
+    public Student getStudentById(Long id) {
+        return studentsRepository.findById(id).get();
+    }
+
 }

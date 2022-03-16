@@ -1,2 +1,12 @@
 GET http://localhost:8080/lyceum/students
 
+###
+
+# get all students of provided group
+GET http://localhost:8080/lyceum/students?groupId=a0001
+
+###
+
+GET http://localhost:8080/lyceum/students?studentId=42
+
+
