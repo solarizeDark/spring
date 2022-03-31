@@ -1,12 +1,10 @@
-GET http://localhost:8080/lyceum/students
+GET http://localhost:8080/people/getAll
 
 ###
 
-# get all students of provided group
-GET http://localhost:8080/lyceum/students?groupId=a0001
+GET http://localhost:8080/people/get/Ilip
 
 ###
 
-GET http://localhost:8080/lyceum/students?studentId=42
-
+GET http://localhost:8080/people/getAll/names.sorted.ascending/Ulup
 

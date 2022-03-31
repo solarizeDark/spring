@@ -12,13 +12,9 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import javax.persistence.EntityManagerFactory;
 import java.util.Properties;
@@ -28,7 +24,7 @@ import java.util.Properties;
 @ComponentScan("ru.fedusiv")
 @EnableWebMvc
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackages = "ru.fedusiv.repositories")
+@EnableJpaRepositories("ru.fedusiv.repositories")
 public class ApplicationConfig {
 
     @Value("${db.url}")
@@ -65,34 +61,11 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public FreeMarkerViewResolver freemarkerViewResolver() {
-        FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
-        resolver.setPrefix("");
-        resolver.setSuffix(".ftlh");
-        resolver.setContentType("text/html;charset=UTF-8");
-        return resolver;
-    }
-
-    @Bean
-    public FreeMarkerConfigurer freemarkerConfig() {
-        FreeMarkerConfigurer configurer = new FreeMarkerConfigurer();
-        configurer.setTemplateLoaderPath("/WEB-INF/ftl/");
-        return configurer;
-    }
-
-    @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
         hibernateJpaVendorAdapter.setDatabase(Database.POSTGRESQL);
-
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(hikariDataSource());
-
         entityManagerFactory.setPackagesToScan("ru.fedusiv.entities");
         entityManagerFactory.setJpaVendorAdapter(hibernateJpaVendorAdapter);
         entityManagerFactory.setJpaProperties(additionalProperties());
@@ -100,7 +73,7 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
+    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory){
         JpaTransactionManager transactionManager = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(entityManagerFactory);
 
@@ -114,5 +87,7 @@ public class ApplicationConfig {
         properties.setProperty("hibernate.show_sql", "true");
         return properties;
     }
+
+
 
 }
