@@ -7,25 +7,30 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.Database;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.data.jdbc.core.dialect.JdbcDialect;
+import org.springframework.data.jdbc.core.dialect.JdbcPostgresDialect;
+import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration;
+import org.springframework.data.jdbc.repository.config.DialectResolver;
+import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
+import org.springframework.data.relational.core.mapping.RelationalMappingContext;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import javax.persistence.EntityManagerFactory;
-import java.util.Properties;
+import javax.sql.DataSource;
 
 @Configuration
 @PropertySource("classpath:db.properties")
 @ComponentScan("ru.fedusiv")
 @EnableWebMvc
 @EnableTransactionManagement
-@EnableJpaRepositories("ru.fedusiv.repositories")
-public class ApplicationConfig {
+@EnableJdbcRepositories("ru.fedusiv.repositories")
+public class ApplicationConfig extends AbstractJdbcConfiguration {
 
     @Value("${db.url}")
     String url;
@@ -61,33 +66,13 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-        hibernateJpaVendorAdapter.setDatabase(Database.POSTGRESQL);
-        LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
-        entityManagerFactory.setDataSource(hikariDataSource());
-        entityManagerFactory.setPackagesToScan("ru.fedusiv.entities");
-        entityManagerFactory.setJpaVendorAdapter(hibernateJpaVendorAdapter);
-        entityManagerFactory.setJpaProperties(additionalProperties());
-        return entityManagerFactory;
+    public NamedParameterJdbcOperations namedParameterJdbcOperations() {
+        return new NamedParameterJdbcTemplate(hikariDataSource());
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory){
-        JpaTransactionManager transactionManager = new JpaTransactionManager();
-        transactionManager.setEntityManagerFactory(entityManagerFactory);
-
-        return transactionManager;
+    public TransactionManager transactionManager() {
+        return new DataSourceTransactionManager(hikariDataSource());
     }
-
-    private Properties additionalProperties() {
-        Properties properties = new Properties();
-        properties.setProperty("hibernate.hbm2ddl.auto", "update");
-        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQL95Dialect");
-        properties.setProperty("hibernate.show_sql", "true");
-        return properties;
-    }
-
-
 
 }

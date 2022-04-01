@@ -8,3 +8,18 @@ GET http://localhost:8080/people/get/Ilip
 
 GET http://localhost:8080/people/getAll/names.sorted.ascending/Ulup
 
+###
+
+GET http://localhost:8080/people/get.top.2.name/Ulup
+
+###
+
+GET http://localhost:8080/people/get.mocked.people
+
+###
+
+POST http://localhost:8080/people/new?name=Ege&surname=Ugi&age=20&patronymic=Pily
+
+###
+
+GET http://localhost:8080/people/get.phone.number/1

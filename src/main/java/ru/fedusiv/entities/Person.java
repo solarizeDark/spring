@@ -1,33 +1,35 @@
 package ru.fedusiv.entities;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.relational.core.mapping.MappedCollection;
+import org.springframework.data.relational.core.mapping.Table;
 
-import javax.persistence.*;
+import java.util.Set;
+
 
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "people")
+@Table("people")
 public class Person {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private String surname;
 
-    @Column(nullable = false)
     private String patronymic;
 
-    @Column(nullable = false)
     private Integer age;
+
+    @MappedCollection(idColumn = "person_id")
+    private Set<PhoneNumber> numbers;
 
     @Override
     public String toString() {
