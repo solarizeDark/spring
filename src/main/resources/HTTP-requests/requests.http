@@ -23,3 +23,7 @@ POST http://localhost:8080/people/new?name=Ege&surname=Ugi&age=20&patronymic=Pil
 ###
 
 GET http://localhost:8080/people/get.phone.number/1
+
+###
+
+GET http://localhost:8080/people/get.all.only.names/Pelep

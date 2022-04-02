@@ -6,6 +6,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -28,8 +29,8 @@ public class Person {
 
     private Integer age;
 
-    @MappedCollection(idColumn = "person_id")
-    private Set<PhoneNumber> numbers;
+    @Transient
+    private Set<PhoneNumber> numbers = new HashSet<>();
 
     @Override
     public String toString() {

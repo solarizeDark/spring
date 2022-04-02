@@ -5,13 +5,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.repository.Repository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import ru.fedusiv.dto.PersonDto;
 import ru.fedusiv.entities.Person;
 import ru.fedusiv.repositories.NamesOnly;
 import ru.fedusiv.repositories.PersonRepository;
 import ru.fedusiv.repositories.PersonRepositoryBrief;
+import ru.fedusiv.repositories.PhoneNumbersRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/people")
@@ -22,6 +25,9 @@ public class PeopleMockController {
 
     @Autowired
     private PersonRepository peopleRepository;
+
+    @Autowired
+    private PhoneNumbersRepository phoneNumbersRepository;
 
     @GetMapping("/getAll")
     public void getAll() {
@@ -68,13 +74,16 @@ public class PeopleMockController {
     @GetMapping("/get.phone.number/{id}")
     public void getPersonPhoneNumbers(@PathVariable("id") Long id) {
         peopleRepository.findById(id)
-                .ifPresent(person -> person.getNumbers().forEach(System.out::println));
+                .ifPresent(person -> phoneNumbersRepository.findAllByPersonId(person.getId())
+                                                            .forEach(System.out::println));
     }
 
     @GetMapping("/get.all.only.names/{surname}")
     public void getAllOnlyNames(@PathVariable("surname") String surname) {
-        Collection<NamesOnly> people = peopleRepositoryBrief.findBySurname(surname);
-        int i = 0;
+        peopleRepositoryBrief.findBySurname(surname, PersonDto.class).forEach(System.out::println);
+        System.out.println();
+        peopleRepositoryBrief.findBySurname(surname, NamesOnly.class)
+                .forEach(name -> System.out.println(name.getName() + " " + name.getSurname()));
     }
 
 }
