@@ -1,4 +1,4 @@
-package ru.fedusiv.repositories;
+package ru.fedusiv.repositories.phones;
 
 import org.springframework.data.repository.Repository;
 import ru.fedusiv.entities.PhoneNumber;

@@ -1,8 +1,7 @@
-package ru.fedusiv.repositories;
+package ru.fedusiv.repositories.people;
 
 import ru.fedusiv.entities.Person;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class CustomMockPersonRepositoryImpl implements CustomMockPersonRepository {

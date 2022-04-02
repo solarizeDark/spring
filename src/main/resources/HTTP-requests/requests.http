@@ -27,3 +27,17 @@ GET http://localhost:8080/people/get.phone.number/1
 ###
 
 GET http://localhost:8080/people/get.all.only.names/Pelep
+
+###
+
+GET http://localhost:8080/people/get.cars/1
+
+###
+
+GET http://localhost:8080/people/get.owners/1
+
+###
+# MyBatis
+###
+
+GET http://localhost:8080/batis/person/1

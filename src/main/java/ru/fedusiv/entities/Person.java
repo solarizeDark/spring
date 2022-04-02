@@ -2,7 +2,6 @@ package ru.fedusiv.entities;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -29,8 +28,9 @@ public class Person {
 
     private Integer age;
 
-    @Transient
     private Set<PhoneNumber> numbers = new HashSet<>();
+
+    private Set<Car> cars = new HashSet<>();
 
     @Override
     public String toString() {

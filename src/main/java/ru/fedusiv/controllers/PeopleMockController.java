@@ -1,20 +1,14 @@
 package ru.fedusiv.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.repository.Repository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import ru.fedusiv.dto.PersonDto;
 import ru.fedusiv.entities.Person;
-import ru.fedusiv.repositories.NamesOnly;
-import ru.fedusiv.repositories.PersonRepository;
-import ru.fedusiv.repositories.PersonRepositoryBrief;
-import ru.fedusiv.repositories.PhoneNumbersRepository;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import ru.fedusiv.repositories.cars.CarsRepository;
+import ru.fedusiv.repositories.people.PersonRepository;
+import ru.fedusiv.repositories.people.PersonRepositoryBrief;
+import ru.fedusiv.repositories.phones.PhoneNumbersRepository;
 
 @Controller
 @RequestMapping("/people")
@@ -27,7 +21,7 @@ public class PeopleMockController {
     private PersonRepository peopleRepository;
 
     @Autowired
-    private PhoneNumbersRepository phoneNumbersRepository;
+    private CarsRepository carsRepository;
 
     @GetMapping("/getAll")
     public void getAll() {
@@ -74,16 +68,24 @@ public class PeopleMockController {
     @GetMapping("/get.phone.number/{id}")
     public void getPersonPhoneNumbers(@PathVariable("id") Long id) {
         peopleRepository.findById(id)
-                .ifPresent(person -> phoneNumbersRepository.findAllByPersonId(person.getId())
-                                                            .forEach(System.out::println));
+                .ifPresent(person -> person.getNumbers().forEach(System.out::println));
     }
 
     @GetMapping("/get.all.only.names/{surname}")
     public void getAllOnlyNames(@PathVariable("surname") String surname) {
         peopleRepositoryBrief.findBySurname(surname, PersonDto.class).forEach(System.out::println);
         System.out.println();
-        peopleRepositoryBrief.findBySurname(surname, NamesOnly.class)
-                .forEach(name -> System.out.println(name.getName() + " " + name.getSurname()));
+    }
+
+    @GetMapping("/get.cars/{id}")
+    public void getAllCarsForPerson(@PathVariable("id") Long personId) {
+        carsRepository.getAllByOwner(personId).forEach(System.out::println);
+    }
+
+    // get all owners of car by car id
+    @GetMapping("/get.owners/{id}")
+    public void getAllOwners(@PathVariable("id") Long id) {
+        peopleRepository.getAllByCarId(id).forEach(System.out::println);
     }
 
 }

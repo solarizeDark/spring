@@ -1,4 +1,4 @@
-package ru.fedusiv.repositories;
+package ru.fedusiv.repositories.people;
 
 import ru.fedusiv.entities.Person;
 
